@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Handwriting Practice</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <h1>Handwriting Practice</h1>
+
+    <textarea id="textInput" placeholder="Paste your text here"></textarea>
+
+    <button id="startBtn">Start</button>
+
+    <div id="practiceArea" hidden>
+
+        <div id="sentence"></div>
+
+        <div id="traceContainer">
+            <canvas id="guideCanvas" width="600" height="180"></canvas>
+            <canvas id="drawCanvas" width="600" height="180"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="clearBtn">Clear</button>
+            <button id="scoreBtn">Score</button>
+            <button id="nextBtn">Next</button>
+        </div>
+
+        <div id="score"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

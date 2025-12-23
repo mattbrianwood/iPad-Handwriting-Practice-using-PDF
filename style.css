@@ -1,0 +1,47 @@
+body {
+    font-family: system-ui, sans-serif;
+    margin: 16px;
+    text-align: center;
+}
+
+textarea {
+    width: 90%;
+    height: 120px;
+    font-size: 16px;
+}
+
+#sentence {
+    font-size: 24px;
+    margin: 16px 0;
+}
+
+#traceContainer {
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+    touch-action: none;
+}
+
+canvas {
+    border: 1px solid #ccc;
+}
+
+#guideCanvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#drawCanvas {
+    position: relative;
+}
+
+.controls {
+    margin-top: 12px;
+}
+
+button {
+    font-size: 18px;
+    padding: 8px 16px;
+    margin: 4px;
+}
