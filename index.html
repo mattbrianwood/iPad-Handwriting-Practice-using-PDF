@@ -5,6 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Handwriting Practice</title>
+
+    <!-- Cursive font -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,6 +17,17 @@
     <h1>Handwriting Practice</h1>
 
     <textarea id="textInput" placeholder="Paste your text here"></textarea>
+
+    <div>
+        <label>
+            <input type="radio" name="fontMode" value="print" checked>
+            Print
+        </label>
+        <label>
+            <input type="radio" name="fontMode" value="cursive">
+            Cursive
+        </label>
+    </div>
 
     <button id="startBtn">Start</button>
 
