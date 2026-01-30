@@ -2,12 +2,28 @@ let sentences = [];
 let currentIndex = 0;
 let targetWord = "";
 let drawing = false;
+let fontMode = "print";
 
 const guideCanvas = document.getElementById("guideCanvas");
 const drawCanvas = document.getElementById("drawCanvas");
 const guideCtx = guideCanvas.getContext("2d");
 const drawCtx = drawCanvas.getContext("2d");
 
+/* ---------------------------
+   Font mode selection
+---------------------------- */
+document.querySelectorAll('input[name="fontMode"]').forEach(radio => {
+    radio.addEventListener("change", e => {
+        fontMode = e.target.value;
+        if (targetWord) {
+            drawGuideWord(targetWord);
+        }
+    });
+});
+
+/* ---------------------------
+   Buttons
+---------------------------- */
 document.getElementById("startBtn").onclick = () => {
     const text = document.getElementById("textInput").value;
     sentences = text.match(/[^.!?]+[.!?]+/g) || [];
@@ -24,6 +40,9 @@ document.getElementById("nextBtn").onclick = () => {
 document.getElementById("clearBtn").onclick = clearDrawing;
 document.getElementById("scoreBtn").onclick = scoreTracing;
 
+/* ---------------------------
+   Sentence handling
+---------------------------- */
 function showSentence() {
     clearDrawing();
     guideCtx.clearRect(0, 0, guideCanvas.width, guideCanvas.height);
@@ -42,15 +61,37 @@ function showSentence() {
     drawGuideWord(targetWord);
 }
 
+/* ---------------------------
+   Guide word rendering
+---------------------------- */
 function drawGuideWord(word) {
-    guideCtx.font = "96px sans-serif";
+    guideCtx.clearRect(0, 0, guideCanvas.width, guideCanvas.height);
+
+    if (fontMode === "cursive") {
+        guideCtx.font = "96px 'Pacifico', cursive";
+        guideCtx.lineWidth = 3;
+    } else {
+        guideCtx.font = "96px sans-serif";
+        guideCtx.lineWidth = 2;
+    }
+
     guideCtx.strokeStyle = "#ccc";
-    guideCtx.lineWidth = 2;
     guideCtx.textAlign = "center";
     guideCtx.textBaseline = "middle";
+
     guideCtx.strokeText(word, 300, 90);
+
+    /* Optional baseline guide (helpful for cursive) */
+    guideCtx.beginPath();
+    guideCtx.moveTo(50, 120);
+    guideCtx.lineTo(550, 120);
+    guideCtx.strokeStyle = "#eee";
+    guideCtx.stroke();
 }
 
+/* ---------------------------
+   Drawing logic
+---------------------------- */
 function clearDrawing() {
     drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
     document.getElementById("score").textContent = "";
@@ -64,16 +105,21 @@ drawCanvas.addEventListener("pointerdown", e => {
 
 drawCanvas.addEventListener("pointermove", e => {
     if (!drawing) return;
+
     drawCtx.lineTo(e.offsetX, e.offsetY);
     drawCtx.strokeStyle = "black";
     drawCtx.lineWidth = 4;
     drawCtx.lineCap = "round";
+    drawCtx.lineJoin = "round";
     drawCtx.stroke();
 });
 
 drawCanvas.addEventListener("pointerup", () => drawing = false);
 drawCanvas.addEventListener("pointerleave", () => drawing = false);
 
+/* ---------------------------
+   Scoring logic
+---------------------------- */
 function scoreTracing() {
     const guideData = guideCtx.getImageData(0, 0, 600, 180).data;
     const drawData = drawCtx.getImageData(0, 0, 600, 180).data;
@@ -94,6 +140,5 @@ function scoreTracing() {
         ? 0
         : Math.round((overlap / guidePixels) * 100);
 
-    document.getElementById("score").textContent =
-        `Accuracy: ${score}%`;
+    document.getElementById("score").textContent = `Accuracy: ${score}%`;
 }
